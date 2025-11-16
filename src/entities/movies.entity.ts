@@ -17,5 +17,5 @@ export class Movie {
   publishingYear: string;
 
   @Column({ type: 'json', nullable: true })
-  poster?: PosterData | null;
+  poster: PosterData | null;
 }
