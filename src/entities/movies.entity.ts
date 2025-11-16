@@ -1,5 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+export interface PosterData {
+  s3Url: string;
+  fileName: string;
+}
+
 @Entity()
 export class Movie {
   @PrimaryGeneratedColumn()
@@ -11,6 +16,6 @@ export class Movie {
   @Column()
   publishingYear: string;
 
-  @Column({ nullable: true })
-  poster: string;
+  @Column({ type: 'json', nullable: true })
+  poster?: PosterData | null;
 }

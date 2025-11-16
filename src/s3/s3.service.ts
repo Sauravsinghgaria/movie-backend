@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable } from '@nestjs/common';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import {
+  S3Client,
+  PutObjectCommand,
+  PutObjectCommandInput,
+} from '@aws-sdk/client-s3';
 import type { File } from 'multer';
 import { ConfigService } from '@nestjs/config';
 @Injectable()
@@ -35,7 +39,7 @@ export class S3Service {
 
     const fileKey = `${Date.now()}-${file.originalname}`;
 
-    const params = {
+    const params: PutObjectCommandInput = {
       Bucket: this.S3_BUCKET,
       Key: fileKey,
       Body: file.buffer,
@@ -44,8 +48,8 @@ export class S3Service {
 
     await this.s3.send(new PutObjectCommand(params));
 
-    // Create public URL
-    const url = `https://${this.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileKey}`;
+    // Create public URL using configured region
+    const url = `https://${this.S3_BUCKET}.s3.${this.AWS_REGION}.amazonaws.com/${fileKey}`;
 
     return { url };
   }
