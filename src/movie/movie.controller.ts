@@ -1,10 +1,15 @@
-import { Controller, Post, Body, Param, Put } from '@nestjs/common';
+import { Controller, Post, Body, Param, Put, Get } from '@nestjs/common';
 import { MovieService } from './movie.service';
 import { Movie } from 'src/entities/movies.entity';
 
 @Controller('movie')
 export class MovieController {
   constructor(private movieService: MovieService) {}
+
+  @Get('')
+  async getAllMovies(): Promise<Movie[]> {
+    return this.movieService.getAllMovies();
+  }
 
   @Post('add')
   async addMovie(

@@ -10,6 +10,10 @@ export class MovieService {
     private movieRepository: Repository<Movie>,
   ) {}
 
+  async getAllMovies(): Promise<Movie[]> {
+    return this.movieRepository.find();
+  }
+
   async addMovie(movieData: {
     title: string;
     publishingYear: string;
